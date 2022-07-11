@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipe_row_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/mediumGray"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/recipe_imageView"
+                android:layout_width="200dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="4dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <!--ellipsize attribute gives long text three dots at the end ... when it reaches max line size-->
+            <TextView
+                android:id="@+id/recipe_name_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="2dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/courgette"
+                android:maxLines="2"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/recipe_imageView"
+                app:layout_constraintTop_toTopOf="@+id/recipe_imageView"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " />
+
+            <TextView
+                android:id="@+id/recipe_desc_textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="4"
+                app:layout_constraintEnd_toEndOf="@+id/recipe_name_textView"
+                app:layout_constraintStart_toStartOf="@+id/recipe_name_textView"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_name_textView"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+            <ImageView
+                android:id="@+id/heart_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/heart_textView"
+                app:layout_constraintStart_toStartOf="@+id/recipe_desc_textView"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_desc_textView"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_heart"
+                app:tint="@color/red" />
+
+            <ImageView
+                android:id="@+id/clock_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/clock_textView"
+                app:layout_constraintStart_toEndOf="@+id/heart_imageView"
+                app:layout_constraintTop_toTopOf="@+id/heart_imageView"
+                app:srcCompat="@drawable/ic_clock"
+                app:tint="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/leaf_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/leaf_textView"
+                app:layout_constraintStart_toEndOf="@+id/clock_imageView"
+                app:srcCompat="@drawable/ic_leaf"
+                app:tint="@color/mediumGray" />
+
+            <TextView
+                android:id="@+id/heart_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/heart_imageView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/heart_imageView"
+                tools:text="100" />
+
+            <TextView
+                android:id="@+id/clock_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/yellow"
+                app:layout_constraintBottom_toBottomOf="@+id/heart_textView"
+                app:layout_constraintStart_toStartOf="@+id/clock_imageView"
+                tools:text="100" />
+
+            <TextView
+                android:id="@+id/leaf_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/mediumGray"
+                app:layout_constraintBottom_toBottomOf="@+id/clock_textView"
+                app:layout_constraintStart_toStartOf="@+id/leaf_imageView"
+                tools:text="100" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,9 @@
         <entry key="app/src/main/res/drawable/ic_menu_book.xml" value="0.2025" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/fragment_favorite_recipes.xml" value="0.2328125" />
+        <entry key="app/src/main/res/layout/fragment_joke.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/fragment_recipes.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/recipe_row_item.xml" value="0.45" />
         <entry key="app/src/main/res/menu/btm_nav_menu.xml" value="0.23177083333333334" />
       </map>
     </option>
