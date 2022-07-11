@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_menu_book.xml" value="0.2025" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/fragment_favorite_recipes.xml" value="0.2328125" />
-        <entry key="app/src/main/res/layout/fragment_recipes.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/fragment_recipes.xml" value="0.25" />
         <entry key="app/src/main/res/menu/btm_nav_menu.xml" value="0.23177083333333334" />
       </map>
     </option>
