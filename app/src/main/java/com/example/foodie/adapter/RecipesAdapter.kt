@@ -2,6 +2,7 @@ package com.example.foodie.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.databinding.RecipeRowItemBinding
 import com.example.foodie.models.FoodRecipe
@@ -41,7 +42,10 @@ class RecipesAdapter: RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>() {
     }
 
     fun setData(foodRecipe: FoodRecipe){
+        val recipesDiffUtil = RecipesDiffUtil(recipes, foodRecipe.results)
+        val recipesDiffResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes =  foodRecipe.results
-        notifyDataSetChanged() // notify RecyclerView that data has been changed and it needs to redraw the whole UI
+        recipesDiffResult.dispatchUpdatesTo(this)
+      //  notifyDataSetChanged() // notify RecyclerView that data has been changed and that it needs to redraw the whole UI. This is an expensive operation. Instead of it, create a DiffUtil class which calculate the difference between an old and a new list's content and to make RecyclerView Adapter only redraw the new item(s) on the screen.
     }
 }
