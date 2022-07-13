@@ -1,7 +1,7 @@
 package com.example.foodie.di
 
 import com.example.foodie.BASE_URL
-import com.example.foodie.FoodRecipesApi
+import com.example.foodie.data.network.FoodRecipesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,7 +46,7 @@ object NetworkModule {
     @Singleton // here we're telling Dagger-Hilt that we only want ONE instance of FoodRecipesApi created throughout the whole specified component's lifecycle (application component in our case). If we didn't use the @Singleton annotation, every time a class injects FoodRecipesApi as a dependency, Hilt will create new instances of it, instead of reusing the same one, objects creation is an expensive operation, so that would be no bueno, and bad memory resources management, and frankly useless since one instance is enough.
     @Provides // since we're using a type (FoodRecipesApi) that is from an external library (i.e. Retrofit lib will create its implementation) as a dependency, we use @Provides annotation for this binding. If we instead had an interface type we defined ourselves that we want to inject as a dependency, we use @Binds annotation.
     // in parameters we define the needed dependencies for the creation of this binding, here we receive Retrofit dependency as a parameter, and thus we must create another binding that provides its implementation, else Hilt won't know from where to get a Retrofit instance.
-    fun provideApiService(retrofit: Retrofit): FoodRecipesApi{ // here, the return type is important, it tells Hilt "whenever something needs FoodRecipesApi as a dependency to be injected, give them this one".
+    fun provideApiService(retrofit: Retrofit): FoodRecipesApi { // here, the return type is important, it tells Hilt "whenever something needs FoodRecipesApi as a dependency to be injected, give them this one".
         return retrofit.create(FoodRecipesApi::class.java)
     }
 }
