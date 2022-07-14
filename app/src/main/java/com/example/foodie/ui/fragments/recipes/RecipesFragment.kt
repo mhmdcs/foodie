@@ -14,6 +14,7 @@ import com.example.foodie.MainViewModel
 import com.example.foodie.R
 import com.example.foodie.adapter.RecipesAdapter
 import com.example.foodie.utils.NetworkResult
+import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +23,7 @@ class RecipesFragment : Fragment() {
     private lateinit var mView: View
     private val adapter by lazy { RecipesAdapter() }
     private lateinit var recyclerView: RecyclerView
+    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
@@ -32,6 +34,7 @@ class RecipesFragment : Fragment() {
         mView = inflater.inflate(R.layout.fragment_recipes, container, false)
 
         recyclerView = mView.findViewById(R.id.recipes_recyclerview)
+        shimmerFrameLayout = mView.findViewById(R.id.shimmer_frame_layout)
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java] // same as ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -71,6 +74,18 @@ class RecipesFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         // show shimmer effect here
+    }
+
+    private fun showShimmerEffect(){
+        shimmerFrameLayout.startShimmer()
+        shimmerFrameLayout.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+    }
+
+    private fun hideShimmerEffect(){
+        shimmerFrameLayout.stopShimmer()
+        shimmerFrameLayout.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
     }
 
 }
