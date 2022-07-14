@@ -5,14 +5,72 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.foodie.BuildConfig
+import com.example.foodie.MainViewModel
 import com.example.foodie.R
+import com.example.foodie.adapter.RecipesAdapter
+import com.example.foodie.utils.NetworkResult
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipesFragment : Fragment() {
+
+    private lateinit var mView: View
+    private val adapter by lazy { RecipesAdapter() }
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var mainViewModel: MainViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipes, container, false)
+        mView = inflater.inflate(R.layout.fragment_recipes, container, false)
+
+        recyclerView = mView.findViewById(R.id.recipes_recyclerview)
+
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java] // same as ViewModelProvider(this).get(MainViewModel::class.java)
+
+        setupRecyclerView()
+        requestRecipesFromApi()
+
+        mainViewModel.foodRecipeResponse.observe(viewLifecycleOwner) { response ->
+            when(response){
+                is NetworkResult.Success -> response.data?.let {
+                    adapter.setData(it) // hide shimmer effect here
+                }
+                is NetworkResult.Error -> Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show() // hide shimmer effect here
+                is NetworkResult.Loading -> {} // show shimmer effect here
+            }
+        }
+
+        return mView
     }
+
+    private fun requestRecipesFromApi() {
+        val queries = applyQueries()
+        mainViewModel.getRecipes(queries)
+    }
+
+    private fun applyQueries(): Map<String, String> {
+        val queries: HashMap<String, String> = HashMap()
+        queries.set("apiKey", BuildConfig.API_KEY)
+        queries["number"] = "50"
+        queries["type"] = "snack"
+        queries["diet"] = "vegan"
+        queries["addRecipeInformation"] = "true"
+        queries["fillIngredients"] = "true"
+        return queries
+    }
+
+    private fun setupRecyclerView() {
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // show shimmer effect here
+    }
+
 }
