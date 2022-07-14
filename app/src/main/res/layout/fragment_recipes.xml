@@ -24,10 +24,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <include layout="@layout/placeholder_row_item"/>
-                    <include layout="@layout/placeholder_row_item"/>
-                    <include layout="@layout/placeholder_row_item"/>
-                    <include layout="@layout/placeholder_row_item"/>
+<!--                    <include layout="@layout/placeholder_row_item"/>-->
+<!--                    <include layout="@layout/placeholder_row_item"/>-->
+<!--                    <include layout="@layout/placeholder_row_item"/>-->
+<!--                    <include layout="@layout/placeholder_row_item"/>-->
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
 
