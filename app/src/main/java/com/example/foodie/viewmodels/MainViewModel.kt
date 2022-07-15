@@ -7,7 +7,7 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.foodie.data.network.Repository
+import com.example.foodie.data.Repository
 import com.example.foodie.models.FoodRecipe
 import com.example.foodie.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
