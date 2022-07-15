@@ -1,12 +1,14 @@
 package com.example.foodie.ui.fragments.recipes
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.BuildConfig
@@ -17,6 +19,7 @@ import com.example.foodie.utils.NetworkResult
 import com.example.foodie.viewmodels.RecipesViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
@@ -47,31 +50,52 @@ class RecipesFragment : Fragment() {
         shimmerFrameLayout = mView.findViewById(R.id.shimmer_frame_layout)
 
         setupRecyclerView()
-        requestRecipesFromApi()
+        readRecipesFromDatabase()
 
         mainViewModel.foodRecipeResponse.observe(viewLifecycleOwner) { response ->
             when(response){
                 is NetworkResult.Success -> response.data?.let {
-                    adapter.setData(it) // hide shimmer effect here
+                    hideShimmerEffect()
+                    adapter.setData(it) //this could probably be commented out, since our local database is our sole, single source of truth and we always display data from it, and shouldn't display data from anywhere else.
                 }
-                is NetworkResult.Error -> Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show() // hide shimmer effect here
-                is NetworkResult.Loading -> {} // show shimmer effect here
+                is NetworkResult.Error -> {
+                    hideShimmerEffect()
+                    readRecipesFromDatabase() // call the offline cache here so that when there's an error with the request, we still display to the user data from the offline cache in the local database
+                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show()
+                }
+                is NetworkResult.Loading -> { showShimmerEffect() }
             }
         }
 
         return mView
     }
 
+        private fun setupRecyclerView() {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            showShimmerEffect()
+        }
+
+    // load data from the offline cache in local database. don't forget to launch a coroutine for this one to make mainViewModel.readRecipes suspend the coroutine until it finishes its work :)
+    private fun readRecipesFromDatabase() = lifecycleScope.launch {
+        mainViewModel.readRecipes.observe(viewLifecycleOwner) { database ->
+            if(database.isNotEmpty()){ // if our database is not empty (i.e. it contains records) then we want to display its data inside our recyclerview
+                Log.i("RecipesFragment", "readRecipesFromDatabase called")
+                val foodRecipe = database.get(0).foodRecipe // here we specify index 0 because we'll only have one row in our recipes table and it'll always be the first row i.e. 0 index.
+                adapter.setData(foodRecipe) // tell recyclerview adapter to set its data from our database FoodRecipe
+                hideShimmerEffect()
+            } else { // else, if the database IS empty, then request new data from the API
+                requestRecipesFromApi()
+            }
+       }
+    }
+
     private fun requestRecipesFromApi() {
+        Log.i("RecipesFragment", "requestRecipesFromApi called")
         val queries = recipesViewModel.applyQueries()
         mainViewModel.getRecipes(queries)
     }
 
-    private fun setupRecyclerView() {
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        // show shimmer effect here
-    }
 
     private fun showShimmerEffect(){
         shimmerFrameLayout.startShimmer()
