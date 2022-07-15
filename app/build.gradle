@@ -19,6 +19,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        // https://developer.android.com/training/data-storage/room/migrating-db-versions#groovy
+        // following 5 lines tells room to export our database schema to JSON file at the project directory
+        // The exported JSON files represent your database's schema history. You should store these files in your version control system, as it allows Room to create older versions of the database for testing purposes.
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
         // Reading local.properties in Kotlin DSL and making it accessible through BuildConfig.
         // Don't forget to  import import java.io.File &  import java.io.FileInputStream & import java.util.*
         // val properties = Properties().apply {load(FileInputStream(File(rootProject.rootDir, "local.properties")))}
