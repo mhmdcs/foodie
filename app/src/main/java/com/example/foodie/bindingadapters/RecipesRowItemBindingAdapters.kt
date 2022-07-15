@@ -9,7 +9,7 @@ import androidx.databinding.BindingAdapter
 import coil.load
 import com.example.foodie.R
 
-class BindingAdapters {
+class RecipesRowItemBindingAdapters {
     companion object {
 
         @BindingAdapter("load_image")
@@ -17,6 +17,7 @@ class BindingAdapters {
         fun loadImage(imageView: ImageView, link: String){
             imageView.load(link) {
                 crossfade(600)
+                error(R.drawable.ic_error_placeholder)
             }
         }
 

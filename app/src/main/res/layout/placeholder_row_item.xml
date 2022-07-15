@@ -28,64 +28,56 @@
                 <View
                     android:id="@+id/view3"
                     android:layout_width="25dp"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_marginStart="36dp"
-                    android:background="@color/placeholderColor"
                     android:layout_marginBottom="4dp"
+                    android:background="@color/placeholderColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view2"
-                    app:layout_constraintTop_toTopOf="@+id/view2" />
+                    app:layout_constraintTop_toTopOf="@+id/view2"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <View
                     android:id="@+id/view2"
                     android:layout_width="25dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="48dp"
-                    android:background="@color/placeholderColor"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="36dp"
                     android:layout_marginBottom="4dp"
+                    android:background="@color/placeholderColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view"
-                    app:layout_constraintTop_toTopOf="@+id/view" />
+                    app:layout_constraintTop_toTopOf="@+id/view"
+                    app:layout_constraintVertical_bias="0.0" />
 
-                <ImageView
+                <View
                     android:id="@+id/recipe_imageView"
                     android:layout_width="200dp"
-                    android:layout_height="0dp"
+                    android:layout_height="190dp"
                     android:layout_marginStart="4dp"
-                    android:scaleType="centerCrop"
+                    android:background="@color/placeholderColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@color/placeholderColor"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <!--ellipsize attribute gives long text three dots at the end ... when it reaches max line size-->
-                <TextView
+                <View
                     android:id="@+id/recipe_name_textView"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="2dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/courgette"
-                    android:maxLines="2"
-                    android:text="@{result.title}"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/recipe_imageView"
                     app:layout_constraintTop_toTopOf="@+id/recipe_imageView"
                     android:background="@color/placeholderColor"/>
 
-                <TextView
+                <View
                     android:id="@+id/recipe_desc_textView"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
                     android:layout_marginTop="4dp"
                     android:background="@color/placeholderColor"
-                    android:ellipsize="end"
-                    android:maxLines="4"
-                    android:text="@{result.summary}"
                     app:layout_constraintEnd_toEndOf="@+id/recipe_name_textView"
                     app:layout_constraintStart_toStartOf="@+id/recipe_name_textView"
                     app:layout_constraintTop_toBottomOf="@+id/recipe_name_textView" />
@@ -93,7 +85,7 @@
                 <View
                     android:id="@+id/view"
                     android:layout_width="25dp"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
                     android:background="@color/placeholderColor"

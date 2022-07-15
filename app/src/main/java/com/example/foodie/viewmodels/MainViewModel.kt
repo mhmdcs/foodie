@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.foodie.data.Repository
 import com.example.foodie.data.database.RecipesEntity
@@ -23,7 +24,7 @@ class MainViewModel @Inject constructor(
     /** ROOM DATABASE */
     val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
 
-   private fun insertRecipes(recipesEntity: RecipesEntity) = viewModelScope.launch {
+    private fun insertRecipes(recipesEntity: RecipesEntity) = viewModelScope.launch {
         repository.local.insertRecipes(recipesEntity)
     }
 
@@ -37,14 +38,16 @@ class MainViewModel @Inject constructor(
     // in safe API calls, we handle errors and exceptions gracefully
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         foodRecipeResponse.value = NetworkResult.Loading()
+        Log.d("MainViewModel", "hasInternetConnection() called ${hasInternetConnection()}")
+
         if (hasInternetConnection()) {
             try {
                 val response = repository.remote.getRecipes(queries)
                 foodRecipeResponse.value = handleFoodRecipeResponse(response)
 
                 val foodRecipes = foodRecipeResponse.value!!.data
-                if(foodRecipes != null){ // here we perform the offline cache, only and only when we retrieve data from our API (i.e. when foodRecipeResponse.value!!.data isn't null)
-                offlineCacheRecipes(foodRecipes)
+                if (foodRecipes != null) { // here we perform the offline cache, only and only when we retrieve data from our API (i.e. when foodRecipeResponse.value!!.data isn't null)
+                    offlineCacheRecipes(foodRecipes)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -64,6 +67,7 @@ class MainViewModel @Inject constructor(
         return when {
             response.message().toString().contains("timeout") -> NetworkResult.Error("API Timeout.")
             response.code() == 402 -> NetworkResult.Error("API Calls Daily Quota Reached. Payment Required.")
+            response.code() ==  401 -> NetworkResult.Error("You are not authorized.\nPlease authenticate API key.")
             response.body()?.results.isNullOrEmpty() -> NetworkResult.Error("Recipe Not Found.")
             response.isSuccessful -> NetworkResult.Success(response.body()!!)
             else -> NetworkResult.Error(response.message())
