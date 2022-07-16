@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodie.BuildConfig
@@ -71,6 +72,10 @@ class RecipesFragment : Fragment() {
                 }
                 is NetworkResult.Loading -> showShimmerEffect()
             }
+        }
+
+        binding.recipesFab.setOnClickListener {
+            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheetFragment)
         }
 
         return binding.root

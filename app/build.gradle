@@ -20,7 +20,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // https://developer.android.com/training/data-storage/room/migrating-db-versions#groovy
-        // following 5 lines tells room to export our database schema to JSON file at the project directory
+        // following 5 lines tells Room to export our database schema to JSON file in the project directory, inside the app module inside a new directory named "schemas"
         // The exported JSON files represent your database's schema history. You should store these files in your version control system, as it allows Room to create older versions of the database for testing purposes.
         javaCompileOptions {
             annotationProcessorOptions {
