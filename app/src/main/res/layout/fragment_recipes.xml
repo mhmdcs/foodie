@@ -59,7 +59,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:focusable="true" />
 
-        <!--alpha attribute means transparency/opacity-->
+        <!--opaque/opacity is actually the opposite of transparent and translucent-->
+        <!--opaque/opacity is when something is “not capable of having light pass through it”-->
+        <!--transparency/translucency is when something IS “capable of having light pass through it”-->
+        <!--100% transparency is 0% opacity, and 100% opacity is 0% transparency-->
+        <!--100% opacity means an object is completely solid (cannot see anything behind it), while 0% opacity means completely transparent (it's invisible), any other values in between 0% and 100% mean partially see-through-->
+        <!--alpha attribute in Android means the level of transparency or opacity-->
 
         <ImageView
             android:id="@+id/imageView"

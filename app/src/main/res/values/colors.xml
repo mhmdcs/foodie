@@ -24,6 +24,7 @@
     <color name="itemColor">@color/darker</color>
 
     // Custom Chip Style
+    // notice how we used colorPrimary's 6200EA HEX color for checkedChipBackgroundColor, but we prefixed it with 20, which means "give that color 20% opacity :)". for example if we instead typed #056200EA  we'll be giving it 5% opacity. For more info w/regards to opacity, alpha, and transparency check out the comments inside fragment_recipes.xml
     <color name="checkedChipBackgroundColor">#206200EA</color>
     <color name="chipBackgroundColor">@color/lightGray</color>
     <color name="checkedChipTextColor">@color/colorPrimary</color>
