@@ -25,9 +25,9 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
     // setting the Preferences DataStore keys for String and Int values
     private object PreferenceKeys {
         val selectedMealType = stringPreferencesKey(PREFERENCES_MEAL_TYPE)
-        val selectedMealTypeId = intPreferencesKey(PREFERENCES_MEAL_TYPE_ID)
+        val selectedMealTypeId = intPreferencesKey(PREFERENCES_MEAL_TYPE_ID)  // the id refers to the index of the chip
         val selectedDietType = stringPreferencesKey(PREFERENCES_DIET_TYPE)
-        val selectedDietTypeId = intPreferencesKey(PREFERENCES_DIET_TYPE_ID)
+        val selectedDietTypeId = intPreferencesKey(PREFERENCES_DIET_TYPE_ID) // the id refers to the index of the chip
     }
 
     // writing to the Preferences DataStore - declare a suspend  function that takes in our Preferences DataStore values
@@ -52,9 +52,9 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         }
         .map { preferences ->
             val selectedMealType = preferences.get(PreferenceKeys.selectedMealType) ?: DEFAULT_MEAL_TYPE
-            val selectedMealTypeId = preferences[PreferenceKeys.selectedMealTypeId] ?: 0
+            val selectedMealTypeId = preferences[PreferenceKeys.selectedMealTypeId] ?: 0 // 0 refers to the index of the first chip in the Meal Type chip group, so if the value is null then it'll point to the "main course" chip at index 0 as the default value
             val selectedDietType = preferences[PreferenceKeys.selectedDietType] ?: DEFAULT_DIET_TYPE
-            val selectedDietTypeId = preferences[PreferenceKeys.selectedDietTypeId] ?: 0
+            val selectedDietTypeId = preferences[PreferenceKeys.selectedDietTypeId] ?: 0 //// 0 refers to the index of the first chip in the Diet Type chip group, so if the value is null then it'll point to the "gluten free" chip at index 0 as the default value
 
             MealAndDietType(selectedMealType, selectedMealTypeId, selectedDietType, selectedDietTypeId)
         }
