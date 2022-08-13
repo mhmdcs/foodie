@@ -16,13 +16,13 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-@ActivityRetainedScoped // since we'll use this DataStore inside a ViewModel, make this dependency exist throughout the lifecycle of the activity while survive configuration changes (in short, the lifecycle of the ViewModel) by annotating it with @ActivityRetainedScoped
+@ActivityRetainedScoped // since we'll use this DataStore inside a ViewModel, make this dependency exist throughout the lifecycle of the activity while also surviving on-configuration changes (in short, the lifecycle of the ViewModel) by annotating it with @ActivityRetainedScoped
 class DataStoreRepository @Inject constructor(@ApplicationContext private val context: Context){
 
-    // create the Preferences DataStore
+    // create the Preferences DataStore object, and give it a name.
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_NAME)
 
-    // setting the Preferences DataStore keys for String and Int values
+    // setting the Preferences DataStore keys for their respective String and Int values
     private object PreferenceKeys {
         val selectedMealType = stringPreferencesKey(PREFERENCES_MEAL_TYPE)
         val selectedMealTypeId = intPreferencesKey(PREFERENCES_MEAL_TYPE_ID)  // the id refers to the index of the chip
@@ -41,7 +41,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         }
     }
 
-    // reading from the Preferences DataStore - declare a Flow variable and initialize it by using the map() function to return the Flow's type argument, and catch a Flow exception while you're at it.
+    // reading from the Preferences DataStore - declare a cold Flow variable and initialize it by using the map() function to return the Flow's type argument, and catch the Flow's exception while you're at it.
     val readMealAndDietType: Flow<MealAndDietType> = context.dataStore.data
         .catch { exception ->
             if(exception is IOException){
